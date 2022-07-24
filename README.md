@@ -1,1 +1,98 @@
-# tooling
+# Анализ открытия сайта samsung.com
+
+## Обычный режим
+
+### Network
+
+- [Профиль загрузки ресурсов при открытии страницы](/assets/profiles/www.samsung.com.har)
+- Неоптимальные места:
+  - Дублирование ресурсов:
+    - Приходит одинаковый ответ
+      ![](/assets/images/2022-07-24_11-10.png)
+    - ![](/assets/images/2022-07-24_11-11.png)
+  - Лишний размер ресурса. Некоторые файлы не сжимаются, минифицируются, оптимизируются. Несколько примеров:
+    - Не сжатый и не минифицированный js-файл
+      ![](/assets/images/2022-07-24_11-25.png)
+    - Формат изображение jpeg вместо webp
+      ![](/assets/images/2022-07-24_11-28.png)
+  - медленно загружающиеся ресурсы. Несколько примеров:
+    - css-файл:
+      ![](/assets/images/2022-07-24_11-31.png)
+    - шрифты:
+      ![](/assets/images/2022-07-24_11-32.png)
+    - SVG-спрайт:
+      ![](/assets/images/2022-07-24_11-33.png)
+    - скрипт:
+      ![](/assets/images/2022-07-24_11-34.png)
+  - ресурсы, блокирующие загрузку
+  - Некоторые файлы (.js, .css) не объединены в один файл (бандл). Следовало бы это сделать.
+
+### Performances
+
+- [Профиль загрузки страницы](/assets/profiles/Profile-20220724T102538.json)
+
+- Время в миллисекундах от начала навигации до событий:
+
+  - First Paint (FP) - [645,6 мс](/assets/images/2022-07-24_10-33.png),
+  - First Contentful Paint (FCP) - [645,6 мс](/assets/images/2022-07-24_10-35.png),
+  - Largest Contentful Paint (LCP) - [767,6 мс](/assets/images/2022-07-24_10-51.png),
+  - DOM Content Loaded (DCL) - [1016,8 мс](/assets/images/2022-07-24_10-52.png),
+  - Load - [1723,2 мс](/assets/images/2022-07-24_10-52_1.png).
+
+- LCP происходит на DOM-элементе \<img src="//images.samsung.com/is/image/samsung/assets/ru/2202/home/Home_B0_KV_Main-KV_1440x640_pc_preview1.jpg?imwidth=1366" alt="Крупный план подставки для S Pen на Galaxy S22 Ultra в бордовом цвете. Когда телефон опускается и поворачивается, чтобы сфокусироваться на задней камере, S Pen выходит из подставки и садится рядом с телефоном." data-target-width="">
+  <img src="//images.samsung.com/is/image/samsung/assets/ru/2202/home/Home_B0_KV_Main-KV_1440x640_pc_preview1.jpg?imwidth=1366" alt="Крупный план подставки для S Pen на Galaxy S22 Ultra в бордовом цвете. Когда телефон опускается и поворачивается, чтобы сфокусироваться на задней камере, S Pen выходит из подставки и садится рядом с телефоном." data-target-width="">
+
+- Время в миллисекундах, которое тратится на разные этапы обработки документа:
+
+  - Loading - 49 мс,
+  - Scripting - 1147 мс,
+  - Rendering - 306 мс,
+  - Painting - 127 мс.
+
+  ![](/assets/images/2022-07-24_10-30.png)
+
+### Coverage
+
+- Объём неиспользованного CSS в ходе загрузки страницы - 456 КБ (с учётом CSS+JS), 443,3 КБ (без учёта CSS+JS). При делении на 1000 - 467 КБ (с учётом CSS+JS).
+  ![](/assets/images/2022-07-24_09-43.png)
+
+- Объём неиспользованного JS в ходе загрузки страницы - 1396 КБ (с учётом CSS+JS), 1383,5 КБ (без учёта CSS+JS). При делении на 1000 - 1429,7 КБ (с учётом CSS+JS).
+  ![](/assets/images/2022-07-24_09-51.png)
+
+---
+
+## Режим с замедлением CPU 4x slowdown и эмуляцией сети Slow 3G
+
+### Network
+
+### Performance
+
+- [Профиль загрузки страницы](/assets/profiles/Profile-20220724T105738.json)
+
+- Время в миллисекундах от начала навигации до событий:
+
+  - First Paint (FP) - [5668 мс](/assets/images/2022-07-24_11-00.png),
+  - First Contentful Paint (FCP) - [5668 мс](/assets/images/2022-07-24_11-01.png),
+  - Largest Contentful Paint (LCP) - [10102,2 мс](/assets/images/2022-07-24_11-01_1.png),
+  - DOM Content Loaded (DCL) - [25663,8 мс](/assets/images/2022-07-24_11-02.png),
+  - Load - [38738,6 мс](/assets/images/2022-07-24_11-03.png).
+
+- LCP происходит на DOM-элементе \<img src="//images.samsung.com/is/image/samsung/assets/ru/2202/home/Home_B0_KV_Main-KV_1440x640_pc_preview1.jpg?imwidth=1366" alt="Крупный план подставки для S Pen на Galaxy S22 Ultra в бордовом цвете. Когда телефон опускается и поворачивается, чтобы сфокусироваться на задней камере, S Pen выходит из подставки и садится рядом с телефоном." data-target-width="">
+  <img src="//images.samsung.com/is/image/samsung/assets/ru/2202/home/Home_B0_KV_Main-KV_1440x640_pc_preview1.jpg?imwidth=1366" alt="Крупный план подставки для S Pen на Galaxy S22 Ultra в бордовом цвете. Когда телефон опускается и поворачивается, чтобы сфокусироваться на задней камере, S Pen выходит из подставки и садится рядом с телефоном." data-target-width="">
+
+- Время в миллисекундах, которое тратится на разные этапы обработки документа:
+
+  - Loading - 173 мс,
+  - Scripting - 3364 мс,
+  - Rendering - 1173 мс,
+  - Painting - 314 мс.
+
+  ![](/assets/images/2022-07-24_10-59.png)
+
+### Coverage
+
+- Объём неиспользованного CSS в ходе загрузки страницы - 455,3 КБ (с учётом CSS+JS), 442,5 КБ (без учёта CSS+JS). При делении на 1000 - 466 КБ (с учётом CSS+JS).
+  ![](/assets/images/2022-07-24_10-15.png)
+
+- Объём неиспользованного JS в ходе загрузки страницы - 1402,5 КБ (с учётом CSS+JS), 1389,6 КБ (без учёта CSS+JS). При делении на 1000 - 1436 КБ (с учётом CSS+JS).
+  ![](/assets/images/2022-07-24_10-19.png)
